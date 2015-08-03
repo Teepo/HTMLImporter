@@ -20,9 +20,6 @@ var Importer = function()
 
 Importer.prototype = {
 
-    currentLink: null,
-    currentTemplate: null,
-
     templates: null,
 
     supportsImports: function()
