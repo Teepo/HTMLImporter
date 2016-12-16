@@ -1,0 +1,28 @@
+module.exports = {
+    entry : './src/app.js',
+    output: {
+        path: './public/js',
+        filename: 'bundle.js',
+        library: 'HTMLImporter'
+    },
+
+    resolve: {
+        extensions: [
+            "",
+            ".js"
+        ]
+    },
+
+    module: {
+        loaders: [
+            {
+                test : /\.js?/,
+                exclude: /node_modules/,
+                loader : 'babel',
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
+    }
+};

@@ -2,5 +2,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var templates = document.querySelectorAll('template');
 
-    (new Importer).run(templates);
+    (new HTMLImporter.default).run(templates);
 });
