@@ -1,4 +1,4 @@
-export default class HTMLImporter {
+export class HTMLImporter {
 
     /**
      * @param NodeList nodes

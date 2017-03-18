@@ -43,6 +43,21 @@ var HTMLImporter =
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _app = __webpack_require__(1);
+
+	document.addEventListener('DOMContentLoaded', function () {
+
+	    var templates = document.querySelectorAll('template');
+
+	    new _app.HTMLImporter().run(templates);
+	});
+
+/***/ },
+/* 1 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -55,7 +70,7 @@ var HTMLImporter =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var HTMLImporter = function () {
+	var HTMLImporter = exports.HTMLImporter = function () {
 	    function HTMLImporter() {
 	        _classCallCheck(this, HTMLImporter);
 	    }
@@ -138,8 +153,6 @@ var HTMLImporter =
 
 	    return HTMLImporter;
 	}();
-
-	exports.default = HTMLImporter;
 
 /***/ }
 /******/ ]);
