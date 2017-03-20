@@ -53,7 +53,7 @@ var HTMLImporter =
 
 	    var templates = document.querySelectorAll('template');
 
-	    new _app.HTMLImporter().run(templates);
+	    new _app.HTMLImporter(templates);
 	});
 
 /***/ },
@@ -71,27 +71,30 @@ var HTMLImporter =
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var HTMLImporter = exports.HTMLImporter = function () {
-	    function HTMLImporter() {
+
+	    /**
+	     * @param {NodeList} nodes
+	     *
+	     * @description Iterale all nodes, and store them.
+	     */
+	    function HTMLImporter(nodes) {
 	        _classCallCheck(this, HTMLImporter);
+
+	        this.templates = Object.keys(nodes).map(function (key) {
+	            return nodes[key];
+	        });
+
+	        this.process();
 	    }
 
+	    /**
+	     * @method
+	     *
+	     * @description Iterate all stored templates, and load them.
+	     */
+
+
 	    _createClass(HTMLImporter, [{
-	        key: 'run',
-
-
-	        /**
-	         * @param NodeList nodes
-	         *
-	         */
-	        value: function run(nodes) {
-
-	            this.templates = Object.keys(nodes).map(function (key) {
-	                return nodes[key];
-	            });
-
-	            this.process();
-	        }
-	    }, {
 	        key: 'process',
 	        value: function process() {
 
@@ -106,6 +109,14 @@ var HTMLImporter =
 	                console.error(new Error('HTMLImporter > emulateLink'));
 	            }
 	        }
+
+	        /**
+	         * @method
+	         *
+	         * @description Create and append in document fake link node
+	         *
+	         */
+
 	    }, {
 	        key: 'emulateLink',
 	        value: function emulateLink() {
@@ -124,6 +135,7 @@ var HTMLImporter =
 	        }
 
 	        /**
+	         * @description Test import supports in link node
 	         *
 	         * @return boolean
 	         */
@@ -134,20 +146,36 @@ var HTMLImporter =
 
 	            return 'import' in document.createElement('link');
 	        }
+
+	        /**
+	         * @method
+	         *
+	         * @description Fired when link node is loaded
+	         *
+	         * @fires HTMLImporter#load
+	         */
+
 	    }, {
 	        key: 'onload',
 	        value: function onload() {
 
-	            if (this.link.import == null) return false;
+	            if (this.link.import === null) return false;
 
 	            this.template.outerHTML = this.link.import.documentElement.outerHTML;
 
 	            this.process();
 	        }
+
+	        /**
+	         * @param {Object} event
+	         *
+	         * @fires HTMLImporter#error
+	         */
+
 	    }, {
 	        key: 'onerror',
-	        value: function onerror() {
-	            console.error(new Error('HTMLImporter > error'));
+	        value: function onerror(event) {
+	            console.error(new Error('HTMLImporter > error', event));
 	        }
 	    }]);
 

@@ -1,10 +1,11 @@
 export class HTMLImporter {
 
     /**
-     * @param NodeList nodes
+     * @param {NodeList} nodes
      *
+     * @description Iterale all nodes, and store them.
      */
-    run(nodes) {
+    constructor(nodes) {
 
         this.templates = Object.keys(nodes).map(key => {
             return nodes[key];
@@ -13,6 +14,11 @@ export class HTMLImporter {
         this.process();
     }
 
+    /**
+     * @method
+     *
+     * @description Iterate all stored templates, and load them.
+     */
     process() {
 
         this.template = this.templates.shift();
@@ -29,6 +35,12 @@ export class HTMLImporter {
         }
     }
 
+    /**
+     * @method
+     *
+     * @description Create and append in document fake link node
+     *
+     */
     emulateLink() {
 
         const link = document.createElement('link');
@@ -45,6 +57,7 @@ export class HTMLImporter {
     }
 
     /**
+     * @description Test import supports in link node
      *
      * @return boolean
      */
@@ -53,9 +66,16 @@ export class HTMLImporter {
         return 'import' in document.createElement('link');
     }
 
+    /**
+     * @method
+     *
+     * @description Fired when link node is loaded
+     *
+     * @fires HTMLImporter#load
+     */
     onload() {
 
-        if (this.link.import == null)
+        if (this.link.import === null)
             return false;
 
         this.template.outerHTML = this.link.import.documentElement.outerHTML;
@@ -63,7 +83,12 @@ export class HTMLImporter {
         this.process();
     }
 
-    onerror() {
-        console.error(new Error('HTMLImporter > error'));
+    /**
+     * @param {Object} event
+     *
+     * @fires HTMLImporter#error
+     */
+    onerror(event) {
+        console.error(new Error('HTMLImporter > error', event));
     }
 }
